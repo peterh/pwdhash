@@ -31,7 +31,7 @@ func constrain(hash string, size int, nonalnum bool) string {
 	hash = strings.TrimRight(hash, "=") // PwdHash uses "" for pad
 	start := size - 4
 	rv := hash[:start]
-	extras := strings.Split(hash[start:], "", -1)
+	extras := strings.Split(hash[start:], "")
 
 	nextExtra := func() string {
 		if len(extras) > 0 {
@@ -71,7 +71,7 @@ func constrain(hash string, size int, nonalnum bool) string {
 		}
 	}
 
-	list := strings.Split(rv, "", -1)
+	list := strings.Split(rv, "")
 	list = rotate(list, nextExtra()[0])
 	rv = strings.Join(list, "")
 	return rv
