@@ -10,7 +10,7 @@ Install and run [gb](https://code.google.com/p/go-gb/).
 
 Usage
 -----
-pwdhash <password> <domain>
+    pwdhash <password> <domain>
 
 See Also
 --------
