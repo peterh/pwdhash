@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/hmac"
+	"crypto/md5"
 	"encoding/base64"
 	"fmt"
 	"os"
@@ -46,9 +47,9 @@ func main() {
 		return
 	}
 
-	hm := hmac.NewMD5([]byte(pwd))
+	hm := hmac.New(md5.New, []byte(pwd))
 	hm.Write([]byte(host))
-	hash := hm.Sum()
+	hash := hm.Sum(nil)
 
 	buf := make([]byte, base64.StdEncoding.EncodedLen(len(hash)))
 	base64.StdEncoding.Encode(buf, hash)

@@ -5,11 +5,11 @@ import (
 	"unicode"
 )
 
-func isNotAlNum(rune int) bool {
-	if unicode.IsLetter(rune) {
+func isNotAlNum(r rune) bool {
+	if unicode.IsLetter(r) {
 		return false
 	}
-	if unicode.IsDigit(rune) {
+	if unicode.IsDigit(r) {
 		return false
 	}
 	return true
