@@ -7,6 +7,9 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"syscall"
+
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 const pwdprefix = "@@"
@@ -32,12 +35,20 @@ func trimurl(host string) string {
 }
 
 func main() {
-	if len(os.Args) != 3 {
-		fmt.Fprintln(os.Stderr, "Usage: pwdhash <password> <domain>")
-		return
+	if len(os.Args) != 2 {
+		fmt.Fprintln(os.Stderr, "Usage: pwdhash <domain>")
+		os.Exit(1)
 	}
-	pwd := os.Args[1]
-	host := trimurl(os.Args[2])
+	fmt.Fprintf(os.Stderr, "Enter password: ")
+	bytePassword, err := terminal.ReadPassword(int(syscall.Stdin))
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Could not read password: %s\n", err)
+		os.Exit(1)
+	}
+
+	pwd := string(bytePassword)
+
+	host := trimurl(os.Args[1])
 
 	if strings.HasPrefix(pwd, pwdprefix) {
 		pwd = pwd[len(pwdprefix):]
